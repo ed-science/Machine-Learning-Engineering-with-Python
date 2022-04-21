@@ -36,7 +36,7 @@ seasonality = {
 
 def train_predict(df_all_data, df_all_train_index, seasonality_params=seasonality):
     # grab split data
-    df_train = df_all_data.copy().iloc[0:df_all_train_index]
+    df_train = df_all_data.copy().iloc[:df_all_train_index]
     df_test = df_all_data.copy().iloc[df_all_train_index:]
 
     # Useful for multiple runs (only doing one run in this sample notebook)

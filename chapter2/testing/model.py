@@ -22,10 +22,9 @@ def cluster_and_label(X):
     print("Silhouette Coefficient: %0.3f"
           % metrics.silhouette_score(X, labels))
 
-    run_metadata = {
+    return {
         'nClusters': n_clusters_,
         'nNoise': n_noise_,
         'silhouetteCoefficient': metrics.silhouette_score(X, labels),
         'labels': labels,
     }
-    return run_metadata

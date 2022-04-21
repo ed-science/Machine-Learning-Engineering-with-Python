@@ -31,11 +31,8 @@ def objective(trial, n_folds, X, y):
     # Extract the best score
     max_score = max(scores)
 
-    # Loss must be minimized
-    loss = 1 - max_score
-
     # Dictionary with information for evaluation
-    return loss
+    return 1 - max_score
 
 
 if __name__ == "__main__":

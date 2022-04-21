@@ -30,17 +30,22 @@ if __name__ == "__main__":
         # fill some nulls
         # data = data.na.fill({categoricalCol:’Unknown’})
         # category indexing with string indexer
-        stringIndexer = StringIndexer(inputCol=categoricalCol,
-                                      outputCol=categoricalCol + "Index").setHandleInvalid(
-            "keep")  # keep is for unknown categories
+        stringIndexer = StringIndexer(
+            inputCol=categoricalCol, outputCol=f"{categoricalCol}Index"
+        ).setHandleInvalid("keep")
+
         # Use onehotencoder to convert cat variables into binary sparseVectors
-        encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], outputCols=[categoricalCol + "classVec"])
+        encoder = OneHotEncoder(
+            inputCols=[stringIndexer.getOutputCol()],
+            outputCols=[f"{categoricalCol}classVec"],
+        )
+
         # Add stages. These are not run here, will be run later
         stages += [stringIndexer, encoder]
 
     # define impute stage for the numerical columns
     numericalColumns = ["age", "balance"]
-    numericalColumnsImputed = [x + "_imputed" for x in numericalColumns]
+    numericalColumnsImputed = [f"{x}_imputed" for x in numericalColumns]
     imputer = Imputer(inputCols=numericalColumns, outputCols=numericalColumnsImputed)
     stages += [imputer]
 
@@ -53,7 +58,10 @@ if __name__ == "__main__":
     stages += [scaler] # already a list so no need for brackets
 
     # Perform assembly stage to bring together features
-    assemblerInputs = [c + "classVec" for c in categoricalColumns] + ["numerical_cols_imputed_scaled"]
+    assemblerInputs = [f"{c}classVec" for c in categoricalColumns] + [
+        "numerical_cols_imputed_scaled"
+    ]
+
     # features contains everything, one hot encoded and numerical
     assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="features")
     stages += [assembler]
