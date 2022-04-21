@@ -5,7 +5,7 @@ for i in gen1:
 
 # Pipeline
 
-data_vals = [x for x in range(100)]
+data_vals = list(range(100))
 
 
 def filter_data(data, condition):
